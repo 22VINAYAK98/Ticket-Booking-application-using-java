@@ -1,0 +1,423 @@
+//package brts1;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JToolBar;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JLayeredPane;
+import java.awt.Font;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import javax.swing.JScrollBar;
+import javax.swing.JTable;
+import java.awt.Color;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.awt.SystemColor;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.print.*;
+import java.time.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import java.awt.TextField;
+
+public class ticket_booking extends JFrame {
+	private JTextField textFieldprice;
+	private JTextField textFielddate;
+	private JTextField textFielddistance;
+	private JTextField txtRecipt;
+	private JTextField text_ticket_no;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ticket_booking frame = new ticket_booking();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public ticket_booking() {
+		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 972, 788);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JButton btnIssue = new JButton("Issue");
+		btnIssue.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		menuBar.add(btnIssue);
+		
+		JButton re_issue_btn = new JButton("TOTAL");
+		re_issue_btn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		re_issue_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Re_issue re_issue = new Re_issue();
+				re_issue.setVisible(true);
+			}
+		});
+		menuBar.add(re_issue_btn);
+		
+		JButton btnVerification = new JButton("Verification");
+		btnVerification.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		menuBar.add(btnVerification);
+		
+		JButton cancelbtn = new JButton("Cancel/Refund");
+		cancelbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			cancel Cancel = new cancel();
+			Cancel.setVisible(true);
+			}
+		});
+		cancelbtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		menuBar.add(cancelbtn);
+		
+		JButton btnSmartCard = new JButton("Smart Card");
+		btnSmartCard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				smartCard smartcard = new smartCard();
+				smartcard.setVisible(true);
+			}
+		});
+		btnSmartCard.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		menuBar.add(btnSmartCard);
+		
+		JButton btnReport = new JButton("Report");
+		btnReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				report Report = new report();
+				Report.setVisible(true);}
+		});
+		btnReport.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		menuBar.add(btnReport);
+		
+		JButton log_out_btn = new JButton("Log Out");
+		log_out_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ticket_booking tb = new ticket_booking();
+				tb.dispose();
+				//LOGIN_PORTAL LG=new LOGIN_PORTAL();
+				//LG.setVisible(true);
+			}
+		});
+		log_out_btn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		menuBar.add(log_out_btn);
+		getContentPane().setLayout(null);
+		
+		JLabel lblRoute = new JLabel("Route");
+		lblRoute.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblRoute.setBounds(104, 116, 56, 16);
+		getContentPane().add(lblRoute);
+		
+		JComboBox comboBoxroute = new JComboBox();
+		comboBoxroute.setModel(new DefaultComboBoxModel(new String[] {"100", "103"}));
+		comboBoxroute.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		comboBoxroute.setBounds(170, 112, 767, 22);
+		getContentPane().add(comboBoxroute);
+		
+		JLabel lblFrom = new JLabel("From");
+		lblFrom.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblFrom.setBounds(104, 168, 56, 16);
+		getContentPane().add(lblFrom);
+		
+		JComboBox comboBoxfrom = new JComboBox();
+		comboBoxfrom.setModel(new DefaultComboBoxModel(new String[] {"SELECT", "RAILWAY STATION HUBLI", "CARPORATION", "HUBLI OLD BUSTAND", "HOSUR CROSS", "KIMS", "VIDHYANAGAR", "BVB COLLEGE", "UNKAL CROSS", "UNKAL LAKE", "NAVANAGAR", "RTO", "SANJEEVINI PARK", "ISKON", "SDM MEDICAL", "SDM DENTAL", "NAVALUR", "KMF", "SHETTAR COLONY", "GANDHINAGR", "VIDHYAGIRI", "TOLNAKA", "BHARAT PETROL PUMP", "NTTF", "COURT", "DHARWAD OLD BUSTAND"}));
+		comboBoxfrom.setBounds(170, 168, 273, 22);
+		getContentPane().add(comboBoxfrom);
+		
+		JLabel lblTo = new JLabel("To");
+		lblTo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblTo.setBounds(594, 168, 38, 16);
+		getContentPane().add(lblTo);
+		
+		JComboBox comboBoxto = new JComboBox();
+		comboBoxto.setModel(new DefaultComboBoxModel(new String[] {"SELECT", "RAILWAY STATION HUBLI", "CARPORATION", "HUBLI OLD BUSTAND", "HOSUR CROSS", "KIMS", "VIDHYANAGAR", "BVB COLLEGE", "UNKAL CROSS", "UNKAL LAKE", "NAVANAGAR", "RTO", "SANJEEVINI PARK", "ISKON", "SDM MEDICAL", "SDM DENTAL", "NAVALUR", "KMF", "SHETTAR COLONY", "GANDHINAGR", "VIDHYAGIRI", "TOLNAKA", "BHARAT PETROL PUMP", "NTTF", "COURT", "DHARWAD OLD BUSTAND"}));
+		comboBoxto.setBounds(664, 168, 273, 22);
+		getContentPane().add(comboBoxto);
+		
+		JLabel lblRyderType = new JLabel("Ryder Type");
+		lblRyderType.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblRyderType.setBounds(104, 279, 84, 16);
+		getContentPane().add(lblRyderType);
+		
+		JComboBox comboBoxrider = new JComboBox();
+		comboBoxrider.setModel(new DefaultComboBoxModel(new String[] {"CHILD", "STUDENT", "CITIZEN", "SENIOR"}));
+		comboBoxrider.setBounds(203, 277, 123, 22);
+		getContentPane().add(comboBoxrider);
+		
+		JLabel lblNoOfTickets = new JLabel("No. of Tickets");
+		lblNoOfTickets.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNoOfTickets.setBounds(387, 280, 112, 16);
+		getContentPane().add(lblNoOfTickets);
+		
+		JComboBox comboBox_no_ticket = new JComboBox();
+		comboBox_no_ticket.setModel(new DefaultComboBoxModel(new String[] {"1"}));
+		comboBox_no_ticket.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		comboBox_no_ticket.setBounds(492, 276, 74, 22);
+		getContentPane().add(comboBox_no_ticket);
+		
+		JLabel lblPrice = new JLabel("Price");
+		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblPrice.setBounds(616, 279, 56, 16);
+		getContentPane().add(lblPrice);
+		
+		textFieldprice = new JTextField();
+		textFieldprice.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textFieldprice.setBounds(674, 276, 91, 22);
+		getContentPane().add(textFieldprice);
+		textFieldprice.setColumns(10);
+		
+		JButton btnAdd = new JButton("Ok");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Connection con=null;
+				String url = "jdbc:mysql://localhost:3306/";
+				String db = "brts";
+				String driver = "com.mysql.jdbc.Driver";
+				String user = "root";
+				String pass = "root";
+				try {
+					
+					if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("NTTF"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("18");
+						textFielddistance.setText("16");
+						//txtField.setText("BRTS enty ticket\n");
+						
+					}
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("NAVANAGAR"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("10");
+						textFielddistance.setText("4");
+					
+					}
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("ISKON"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("12");
+						textFielddistance.setText("16k");
+					
+					}
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("KIMS"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("5");
+						textFielddistance.setText("2k");
+					
+					}
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("UNKKAL CROSS"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("1");
+						textFielddistance.setText("5");
+					
+					}
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("HUBLI OLD BUSTAND"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("5");
+						textFielddistance.setText("5");
+					
+					}
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("HOSUR CROSS"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("3");
+						textFielddistance.setText("5");
+					
+					}
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("SANJEEVINI PARK"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("14");
+						textFielddistance.setText("8");
+					
+					}
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("SDM MEDICAL"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("14");
+						textFielddistance.setText("10");
+					
+					}
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("KMF"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("16");
+						textFielddistance.setText("12");
+					
+					}
+		
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("GANDHINAGR"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("16");
+						textFielddistance.setText("12");
+					
+					}
+		
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("VIDHYAGIRI"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("16");
+						textFielddistance.setText("14");
+					
+					}
+		
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("TOLNAKA"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("18");
+						textFielddistance.setText("15");
+					
+					}
+		
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("BHARAT PETROL PUMP"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("18");
+						textFielddistance.setText("16");
+					
+					}
+		
+					else if((comboBoxroute.getSelectedItem().equals("103")) && (comboBoxfrom.getSelectedItem().equals("BVB COLLEGE")) && (comboBoxto.getSelectedItem().equals("DHARWAD OLD BUSTAND"))
+							 && (comboBoxrider.getSelectedItem().equals("CITIZEN"))  && (comboBox_no_ticket.getSelectedItem().equals("1")) 	) {
+						textFieldprice.setText("18");
+						textFielddistance.setText("18");
+					     
+					}
+					
+		
+		
+					
+			}catch(Exception e) {
+		}}});
+		btnAdd.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnAdd.setBounds(802, 276, 112, 42);
+		getContentPane().add(btnAdd);
+		
+		JButton btnqrcode = new JButton("GENERATE_QRCODE");
+		btnqrcode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnqrcode.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnqrcode.setBounds(83, 424, 142, 42);
+		getContentPane().add(btnqrcode);
+		
+		JButton btnprintticket = new JButton("Print Ticket");
+		btnprintticket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Connection con=null;
+				String url = "jdbc:mysql://localhost:3306/";
+				String db = "brts";
+				String driver = "com.mysql.jdbc.Driver";
+				String user = "root";
+				String pass = "root";
+				Object value1=comboBoxfrom.getSelectedItem();
+				Object value2=comboBoxto.getSelectedItem();
+				Object value3=comboBox_no_ticket.getSelectedItem();
+				try {
+					Class.forName(driver);
+					con = DriverManager.getConnection(url+db,user,pass);
+					PreparedStatement st = con.prepareStatement("insert into ticket_booking(ticket_no,from_,to_,distance,no_of_tickets,price) values(?,?,?,?,?,?)");
+					st.setString(1,text_ticket_no.getText() );
+					st.setString(2,(String)value1 );				;
+					st.setString(3,(String) value2);
+					st.setString(4,textFielddistance.getText());
+					st.setString(5,(String)value3);
+					st.setString(6,textFieldprice.getText());
+					st.executeUpdate();
+					
+					txtRecipt.print();
+					
+					JOptionPane.showMessageDialog(null,"Ticket is confirmed");
+					con.close();
+					text_ticket_no.setText(null);
+					comboBoxfrom.getSelectedItem().equals("SELECT");
+					comboBoxto.getSelectedItem().equals("SELE0CT");
+					}
+				catch(Exception e) {
+					JOptionPane.showMessageDialog(null, e);
+				}
+				}
+			});
+		btnprintticket.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnprintticket.setBounds(789, 453, 142, 42);
+		getContentPane().add(btnprintticket);
+		
+		JLabel lblTicketBooking = new JLabel("Ticket Booking ");
+		lblTicketBooking.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblTicketBooking.setForeground(SystemColor.activeCaption);
+		lblTicketBooking.setBounds(367, 33, 293, 42);
+		getContentPane().add(lblTicketBooking);
+		
+		JLabel lblNewLabel = new JLabel("date");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setBounds(104, 360, 133, 35);
+		getContentPane().add(lblNewLabel);
+		
+		textFielddate = new JTextField();
+		textFielddate.setBounds(164, 366, 162, 26);
+		getContentPane().add(textFielddate);
+		textFielddate.setColumns(10);
+		
+		JLabel lblDistance = new JLabel("Distance");
+		lblDistance.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDistance.setBounds(609, 334, 74, 25);
+		getContentPane().add(lblDistance);
+		
+		textFielddistance = new JTextField();
+		textFielddistance.setBounds(679, 338, 86, 20);
+		getContentPane().add(textFielddistance);
+		textFielddistance.setColumns(10);
+		
+		txtRecipt = new JTextField();
+		txtRecipt.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtRecipt.setBounds(267, 485, 414, 198);
+		getContentPane().add(txtRecipt);
+		txtRecipt.setColumns(10);
+		
+		text_ticket_no = new JTextField();
+		text_ticket_no.setBounds(226, 225, 273, 23);
+		getContentPane().add(text_ticket_no);
+		text_ticket_no.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("TICKET_NO");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_1.setBounds(104, 224, 84, 25);
+		getContentPane().add(lblNewLabel_1);
+		
+		JButton btnShow = new JButton("Show");
+		btnShow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtRecipt.setText(" From:\n"
+						+comboBoxfrom.getSelectedItem()+"TO:"
+						+comboBoxto.getSelectedItem()+"PRICE:"+textFieldprice.getText());
+				
+			}
+		});
+		btnShow.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnShow.setBounds(802, 363, 112, 42);
+		getContentPane().add(btnShow);
+		//getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+	}
+}

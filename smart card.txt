@@ -1,0 +1,221 @@
+//package brts1;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JScrollBar;
+import javax.swing.JComboBox;
+import javax.swing.JTextArea;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class smartCard extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
+	private JTextField textField_8;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					smartCard frame = new smartCard();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public smartCard() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 792, 756);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblName = new JLabel("NAME:");
+		lblName.setBounds(107, 100, 56, 16);
+		contentPane.add(lblName);
+		
+		textField = new JTextField();
+		textField.setBounds(175, 97, 116, 22);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(370, 97, 116, 22);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(555, 97, 116, 22);
+		contentPane.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JLabel lblFirst = new JLabel("First");
+		lblFirst.setBounds(210, 68, 56, 16);
+		contentPane.add(lblFirst);
+		
+		JLabel lblMiddle = new JLabel("Middle");
+		lblMiddle.setBounds(398, 68, 56, 16);
+		contentPane.add(lblMiddle);
+		
+		JLabel lblLast = new JLabel("Last");
+		lblLast.setBounds(599, 68, 56, 16);
+		contentPane.add(lblLast);
+		
+		JLabel lblDob = new JLabel("D.O.B");
+		lblDob.setBounds(107, 167, 56, 16);
+		contentPane.add(lblDob);
+		
+		JLabel lblDay = new JLabel("Day");
+		lblDay.setBounds(181, 146, 56, 16);
+		contentPane.add(lblDay);
+		
+		JLabel lblMonth = new JLabel("Month");
+		lblMonth.setBounds(255, 146, 56, 16);
+		contentPane.add(lblMonth);
+		
+		JLabel lblYear = new JLabel("Year");
+		lblYear.setBounds(352, 146, 56, 16);
+		contentPane.add(lblYear);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(175, 164, 62, 22);
+		contentPane.add(comboBox);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(255, 164, 56, 22);
+		contentPane.add(comboBox_1);
+		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(334, 164, 56, 22);
+		contentPane.add(comboBox_2);
+		
+		JLabel lblAge = new JLabel("Age");
+		lblAge.setBounds(466, 167, 56, 16);
+		contentPane.add(lblAge);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(500, 164, 116, 22);
+		contentPane.add(textField_3);
+		textField_3.setColumns(10);
+		
+		JLabel lblyears = new JLabel("(years)");
+		lblyears.setBounds(628, 167, 56, 16);
+		contentPane.add(lblyears);
+		
+		JLabel lblAddress = new JLabel("ADDRESS:");
+		lblAddress.setBounds(107, 243, 86, 16);
+		contentPane.add(lblAddress);
+		
+		JTextArea textAddress = new JTextArea();
+		textAddress.setForeground(Color.LIGHT_GRAY);
+		textAddress.setText("Please enter your address here");
+		textAddress.setBounds(107, 269, 366, 57);
+		contentPane.add(textAddress);
+		
+		JLabel lblPhoneNo = new JLabel("Phone No.");
+		lblPhoneNo.setBounds(107, 378, 76, 16);
+		contentPane.add(lblPhoneNo);
+		
+		textField_4 = new JTextField();
+		textField_4.setBounds(195, 375, 146, 22);
+		contentPane.add(textField_4);
+		textField_4.setColumns(10);
+		
+		JLabel lblEmailid = new JLabel("Email_id");
+		lblEmailid.setBounds(430, 378, 56, 16);
+		contentPane.add(lblEmailid);
+		
+		textField_5 = new JTextField();
+		textField_5.setBounds(521, 375, 150, 22);
+		contentPane.add(textField_5);
+		textField_5.setColumns(10);
+		
+		JLabel lblSex = new JLabel("Sex");
+		lblSex.setBounds(107, 214, 56, 16);
+		contentPane.add(lblSex);
+		
+		textField_6 = new JTextField();
+		textField_6.setBounds(175, 211, 62, 22);
+		contentPane.add(textField_6);
+		textField_6.setColumns(10);
+		
+		JLabel lblmfother = new JLabel("(M/F/Other)");
+		lblmfother.setForeground(Color.GRAY);
+		lblmfother.setBounds(255, 214, 86, 16);
+		contentPane.add(lblmfother);
+		
+		JLabel lblSmartCard = new JLabel("SMART CARD");
+		lblSmartCard.setForeground(new Color(70, 130, 180));
+		lblSmartCard.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblSmartCard.setBounds(300, 25, 173, 32);
+		contentPane.add(lblSmartCard);
+		
+		JLabel emp_id1lbl = new JLabel("E_ID");
+		emp_id1lbl.setBounds(107, 425, 56, 16);
+		contentPane.add(emp_id1lbl);
+		
+		textField_7 = new JTextField();
+		textField_7.setBounds(195, 422, 116, 22);
+		contentPane.add(textField_7);
+		textField_7.setColumns(10);
+		
+		JLabel lblCustomerid = new JLabel("Customer_ID");
+		lblCustomerid.setBounds(107, 473, 86, 16);
+		contentPane.add(lblCustomerid);
+		
+		textField_8 = new JTextField();
+		textField_8.setBounds(195, 470, 146, 22);
+		contentPane.add(textField_8);
+		textField_8.setColumns(10);
+		
+		JLabel lblitWillBe = new JLabel("(It will be your unique ID)");
+		lblitWillBe.setForeground(Color.RED);
+		lblitWillBe.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblitWillBe.setBounds(352, 473, 183, 16);
+		contentPane.add(lblitWillBe);
+		
+		JButton btnCreateSmartCard = new JButton("Create Smart Card");
+		btnCreateSmartCard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Smart card is registered");
+				smartCard sc = new smartCard();
+				sc.dispose();
+				ticket_booking tb = new ticket_booking();
+				tb.setVisible(true);
+				
+			}
+		});
+		btnCreateSmartCard.setBackground(Color.LIGHT_GRAY);
+		btnCreateSmartCard.setForeground(Color.BLUE);
+		btnCreateSmartCard.setBounds(311, 571, 143, 37);
+		contentPane.add(btnCreateSmartCard);
+	}
+}

@@ -1,0 +1,164 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.SystemColor;
+import java.awt.Font;
+import javax.swing.ImageIcon;
+
+public class LOGIN_PORTAL {
+
+	private JFrame frame;
+	private JTextField Employee_id;
+	private JPasswordField Password;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LOGIN_PORTAL window = new LOGIN_PORTAL();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public LOGIN_PORTAL() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.LIGHT_GRAY);
+		frame.setBounds(100, 100, 782, 437);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblEmployeeid = new JLabel("Employee_id");
+		lblEmployeeid.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblEmployeeid.setBounds(101, 120, 126, 26);
+		frame.getContentPane().add(lblEmployeeid);
+		
+		JLabel lblNewLabel = new JLabel("Password");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel.setBounds(101, 167, 126, 26);
+		frame.getContentPane().add(lblNewLabel);
+		
+		Employee_id = new JTextField();
+		Employee_id.setBounds(315, 119, 170, 32);
+		frame.getContentPane().add(Employee_id);
+		Employee_id.setColumns(10);
+		
+		Password = new JPasswordField();
+		Password.setBounds(315, 166, 170, 32);
+		frame.getContentPane().add(Password);
+		
+		JButton Login = new JButton("LOG IN");
+		Login.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		Login.setForeground(SystemColor.controlDkShadow);
+		Login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Connection con=null;
+				String url = "jdbc:mysql://localhost:3306/";
+				String db = "brts";
+				String driver = "com.mysql.jdbc.Driver";
+				String user = "root";
+				String pass = "root";
+				try {
+					Class.forName(driver);
+					con = DriverManager.getConnection(url+db,user,pass);
+				
+					String query = "select * from emp_info where emp_id=? and emp_paasword=? ";
+					PreparedStatement pst=con.prepareStatement(query);
+					pst.setString(1,Employee_id.getText());
+					pst.setString(2,Password.getText());
+					
+					ResultSet rs=pst.executeQuery();
+					int count=0;
+					while(rs.next()) {
+						count=count+1;
+					}
+					if(count==1) {
+						JOptionPane.showMessageDialog(null, " login successfully");
+						Employee_id.setText(null);
+						Password.setText(null);
+						Employee_info empl=new Employee_info();
+						empl.setVisible(true);
+						
+					}
+					else if(count>1) {
+						
+						JOptionPane.showMessageDialog(null, "duplicate user name and password.....");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "emploee id and password are incorrect  try again");
+					}
+					rs.close();
+					pst.close();
+				}
+				catch(Exception e) {
+					JOptionPane.showMessageDialog(null, e);
+				}}
+		});
+		Login.setBounds(315, 209, 126, 32);
+		frame.getContentPane().add(Login);
+		
+		JLabel lblBrts = new JLabel("BRTS");
+		lblBrts.setFont(new Font("Tahoma", Font.BOLD, 32));
+		lblBrts.setForeground(new Color(70, 130, 180));
+		lblBrts.setBounds(315, 35, 222, 26);
+		frame.getContentPane().add(lblBrts);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\DBMS_BRTS_PROJECT\\Capture.JPG"));
+		lblNewLabel_1.setBounds(0, 298, 280, 100);
+		frame.getContentPane().add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\DBMS_BRTS_PROJECT\\MovingWater-vi.gif"));
+		lblNewLabel_2.setBounds(63, 35, 46, 14);
+		frame.getContentPane().add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\DBMS_BRTS_PROJECT\\KLETECH.png"));
+		lblNewLabel_3.setBounds(547, 11, 239, 206);
+		frame.getContentPane().add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("New label");
+		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\DBMS_BRTS_PROJECT\\KARNATAKA_LOGO.png"));
+		lblNewLabel_4.setBounds(-3, -6, 112, 96);
+		frame.getContentPane().add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("New label");
+		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\DBMS_BRTS_PROJECT\\CHIGARI.jpg"));
+		lblNewLabel_5.setBounds(547, 201, 273, 197);
+		frame.getContentPane().add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_6 = new JLabel("New label");
+		lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\DBMS_BRTS_PROJECT\\1-blue-sky-clouds1.jpg"));
+		lblNewLabel_6.setBounds(0, 0, 778, 398);
+		frame.getContentPane().add(lblNewLabel_6);
+	}
+}

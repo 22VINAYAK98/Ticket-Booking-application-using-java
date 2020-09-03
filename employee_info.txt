@@ -1,0 +1,75 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import java.awt.Font;
+
+public class Employee_info extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Employee_info frame = new Employee_info();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Employee_info() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton AddEmployee = new JButton("ADD EMPLOYEE");
+		AddEmployee.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		AddEmployee.setForeground(SystemColor.controlDkShadow);
+		AddEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, " login successfully");
+				Employee_info em=new Employee_info();
+				em.dispose();
+				Add_employee adep=new Add_employee();
+				adep.setVisible(true);
+			}
+		});
+		AddEmployee.setBounds(127, 72, 171, 58);
+		contentPane.add(AddEmployee);
+		
+		JButton ticket_sell = new JButton("TICKETS");
+		ticket_sell.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		ticket_sell.setForeground(SystemColor.controlDkShadow);
+		ticket_sell.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ticket_booking tb= new ticket_booking();
+				Employee_info em=new Employee_info();
+				em.dispose();
+				tb.setVisible(true);
+			}
+		});
+		ticket_sell.setBounds(127, 141, 171, 58);
+		contentPane.add(ticket_sell);
+	}
+
+}

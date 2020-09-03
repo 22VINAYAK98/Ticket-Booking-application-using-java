@@ -1,0 +1,91 @@
+//package brts1;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.awt.event.ActionEvent;
+
+public class cancel extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textFieldticket_no;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					cancel frame = new cancel();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public cancel() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 299);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		textFieldticket_no = new JTextField();
+		textFieldticket_no.setBounds(82, 99, 224, 40);
+		contentPane.add(textFieldticket_no);
+		textFieldticket_no.setColumns(10);
+		
+		JButton btnNewButtoncancel = new JButton("Cancel ");
+		btnNewButtoncancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Connection con=null;
+				String url = "jdbc:mysql://localhost:3306/";
+				String db = "brts";
+				String driver = "com.mysql.jdbc.Driver";
+				String user = "root";
+				String pass = "root";
+				try {
+					Class.forName(driver);
+					con = DriverManager.getConnection(url+db,user,pass);
+					PreparedStatement st = con.prepareStatement("DELETE FROM ticket_booking WHERE ticket_no =?");
+					st.setString(1,textFieldticket_no.getText() );
+					st.executeUpdate();
+					JOptionPane.showMessageDialog(null, "Ticket is cancelled successfully.");
+					con.close();
+				}
+				catch(Exception expt3) {
+					JOptionPane.showMessageDialog(null, "Error in cancelling the ticket............!");
+				}
+				}
+		});
+		btnNewButtoncancel.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnNewButtoncancel.setBounds(82, 172, 224, 40);
+		contentPane.add(btnNewButtoncancel);
+		
+		JLabel lblEnterTheTicket = new JLabel("Enter the ticket no to cancel ticket.");
+		lblEnterTheTicket.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblEnterTheTicket.setBounds(76, 39, 315, 49);
+		contentPane.add(lblEnterTheTicket);
+	}
+
+}

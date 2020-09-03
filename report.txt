@@ -1,0 +1,104 @@
+//package brts1;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+
+public class report extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField cust_nametxt;
+	private JTextField report_no;
+	private JTextField re_sub;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					report frame = new report();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public report() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 389, 389);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblName = new JLabel("NAME");
+		lblName.setBounds(84, 56, 56, 16);
+		contentPane.add(lblName);
+		
+		cust_nametxt = new JTextField();
+		cust_nametxt.setBounds(167, 53, 116, 22);
+		contentPane.add(cust_nametxt);
+		cust_nametxt.setColumns(10);
+		
+		JLabel lblReportNo = new JLabel("Report No");
+		lblReportNo.setBounds(84, 99, 70, 16);
+		contentPane.add(lblReportNo);
+		
+		report_no = new JTextField();
+		report_no.setBounds(167, 96, 116, 22);
+		contentPane.add(report_no);
+		report_no.setColumns(10);
+		
+		JLabel lblSubject = new JLabel("Subject");
+		lblSubject.setBounds(84, 137, 56, 16);
+		contentPane.add(lblSubject);
+		
+		re_sub = new JTextField();
+		re_sub.setBounds(167, 137, 116, 22);
+		contentPane.add(re_sub);
+		re_sub.setColumns(10);
+		
+		JLabel lblDescription = new JLabel("Description:");
+		lblDescription.setBounds(84, 182, 83, 16);
+		contentPane.add(lblDescription);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(84, 227, 4, 22);
+		contentPane.add(textArea);
+		
+		JTextArea descriptiontxt = new JTextArea();
+		descriptiontxt.setBounds(84, 202, 199, 72);
+		contentPane.add(descriptiontxt);
+		
+		JButton btnSubmitReport = new JButton("Submit Report");
+		btnSubmitReport.setForeground(new Color(70, 130, 180));
+		btnSubmitReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				report Report = new report();
+				ticket_booking tb = new ticket_booking();
+				Report.dispose();
+				tb.setVisible(true);
+			}
+		});
+		btnSubmitReport.setBounds(129, 287, 116, 36);
+		contentPane.add(btnSubmitReport);
+	}
+
+}

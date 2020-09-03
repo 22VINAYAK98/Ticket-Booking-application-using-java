@@ -1,0 +1,115 @@
+//package brts1;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.ImageIcon;
+
+public class Re_issue extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Re_issue frame = new Re_issue();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Re_issue() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 622, 428);
+		contentPane = new JPanel();
+		contentPane.setForeground(SystemColor.activeCaptionBorder);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblBookingNo = new JLabel("ENTER TOATAL TO SEE  TOTAL EARNINGS");
+		lblBookingNo.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
+		lblBookingNo.setBounds(169, 28, 359, 37);
+		contentPane.add(lblBookingNo);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textField.setBounds(168, 88, 334, 58);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JButton re_issue_btn = new JButton("TOTAL");
+		re_issue_btn.setForeground(new Color(72, 61, 139));
+		re_issue_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Connection con=null;
+				String url = "jdbc:mysql://localhost:3306/";
+				String db = "brts";
+				String driver = "com.mysql.jdbc.Driver";
+				String user = "root";
+				String pass = "root";
+				try {
+					Class.forName(driver);
+					con = DriverManager.getConnection(url+db,user,pass);
+				
+					String query = "select sum(price) from ticket_booking  ";
+					PreparedStatement pst=con.prepareStatement(query);
+					
+					
+					ResultSet rs=pst.executeQuery();
+					if(rs.next()) {
+						String sum=rs.getString("sum(price)");
+						textField.setText(sum);
+						
+					}
+					
+				    
+				}
+				catch(Exception e1) {
+					JOptionPane.showMessageDialog(null, e);
+				}
+				
+			}
+			
+		});
+		re_issue_btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		re_issue_btn.setBounds(274, 192, 119, 45);
+		contentPane.add(re_issue_btn);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\DBMS_BRTS_PROJECT\\34286632074_3b499afda6_b.jpg"));
+		lblNewLabel_1.setBounds(0, 0, 606, 400);
+		contentPane.add(lblNewLabel_1);
+		
+		//JLabel lblNewLabel = new JLabel("New label");
+		//contentPane.add(lblNewLabel, BorderLayout.CENTER);
+	}
+}

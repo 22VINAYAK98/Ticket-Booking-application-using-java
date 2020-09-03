@@ -1,0 +1,208 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JSeparator;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.ImageIcon;
+
+public class Add_employee extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField first_name;
+	private JTextField last_name;
+	private JTextField employee_id;
+	private JTextField address;
+	private JTextField pincode;
+	private JTextField password;
+	private JTextField ph_no;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Add_employee frame = new Add_employee();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Add_employee() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 665, 539);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel FirstName = new JLabel("First Name");
+		FirstName.setFont(new Font("Tahoma", Font.BOLD, 13));
+		FirstName.setForeground(Color.BLACK);
+		FirstName.setBounds(126, 119, 94, 38);
+		contentPane.add(FirstName);
+		
+		JLabel LastName = new JLabel("last Name");
+		LastName.setFont(new Font("Tahoma", Font.BOLD, 13));
+		LastName.setForeground(Color.BLACK);
+		LastName.setBounds(400, 125, 133, 26);
+		contentPane.add(LastName);
+		
+		first_name = new JTextField();
+		first_name.setBounds(126, 150, 148, 26);
+		contentPane.add(first_name);
+		first_name.setColumns(10);
+		
+		last_name = new JTextField();
+		last_name.setBounds(400, 150, 133, 26);
+		contentPane.add(last_name);
+		last_name.setColumns(10);
+		
+		JLabel Employeeid = new JLabel("Employee_id");
+		Employeeid.setForeground(Color.BLACK);
+		Employeeid.setFont(new Font("Tahoma", Font.BOLD, 14));
+		Employeeid.setBounds(43, 76, 94, 32);
+		contentPane.add(Employeeid);
+		
+		employee_id = new JTextField();
+		employee_id.setBounds(137, 81, 170, 26);
+		contentPane.add(employee_id);
+		employee_id.setColumns(10);
+		
+		JLabel Address = new JLabel("Address:");
+		Address.setForeground(Color.BLACK);
+		Address.setFont(new Font("Tahoma", Font.BOLD, 13));
+		Address.setBounds(43, 197, 109, 31);
+		contentPane.add(Address);
+		
+		address = new JTextField();
+		address.setForeground(Color.LIGHT_GRAY);
+		address.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		address.setText("enter your address here");
+		address.setBounds(126, 208, 317, 55);
+		contentPane.add(address);
+		address.setColumns(10);
+		
+		pincode = new JTextField();
+		pincode.setBounds(126, 316, 158, 26);
+		contentPane.add(pincode);
+		pincode.setColumns(10);
+		
+		JLabel Pincode = new JLabel("Pincode");
+		Pincode.setForeground(Color.BLACK);
+		Pincode.setFont(new Font("Tahoma", Font.BOLD, 14));
+		Pincode.setBounds(43, 314, 63, 26);
+		contentPane.add(Pincode);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(105, 241, 1, 150);
+		contentPane.add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(103, 241, 1, 170);
+		contentPane.add(separator_1);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(20, 93, 596, 0);
+		contentPane.add(separator_2);
+		
+		JButton btnNewButton = new JButton("Add employee");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton.setBounds(212, 419, 148, 55);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Connection con=null;
+				String url = "jdbc:mysql://localhost:3306/";
+				String db = "brts";
+				String driver = "com.mysql.jdbc.Driver";
+				String user = "root";
+				String pass = "root";
+				try {
+					Class.forName(driver);
+					con = DriverManager.getConnection(url+db,user,pass);
+					PreparedStatement pst = con.prepareStatement("insert into emp_info(emp_id,f_name,l_name,emp_address,pincode,emp_ph_no,emp_paasword) values(?,?,?,?,?,?,?)");
+					pst.setString(1,employee_id.getText() );
+					pst.setString(2,first_name.getText() );
+					pst.setString(3,last_name.getText());
+					pst.setString(4,address.getText());
+					
+					pst.setString(5,pincode.getText());
+					pst.setString(6,ph_no.getText());
+					pst.setString(7,password.getText());
+					pst.executeUpdate();
+					JOptionPane.showMessageDialog(null,"Data is successfully inserted into database");
+					con.close();
+				
+					Employee_info empl=new Employee_info();
+					empl.setVisible(true);
+			}catch(Exception e) {
+				JOptionPane.showMessageDialog(null, e);
+			}
+			}});
+		contentPane.add(btnNewButton);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPassword.setBounds(317, 76, 73, 31);
+		contentPane.add(lblPassword);
+		
+		password = new JTextField();
+		password.setBounds(400, 80, 158, 26);
+		contentPane.add(password);
+		password.setColumns(10);
+		
+		JLabel lblPhno = new JLabel("ph_no");
+		lblPhno.setForeground(Color.BLACK);
+		lblPhno.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPhno.setBounds(43, 377, 63, 14);
+		contentPane.add(lblPhno);
+		
+		ph_no = new JTextField();
+		ph_no.setBounds(126, 378, 170, 16);
+		contentPane.add(ph_no);
+		ph_no.setColumns(10);
+		
+		JLabel lblName = new JLabel("NAME:");
+		lblName.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblName.setBounds(43, 154, 63, 14);
+		contentPane.add(lblName);
+		
+		JLabel lblBrtsEmployee = new JLabel("BRTS EMPLOYEE");
+		lblBrtsEmployee.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblBrtsEmployee.setForeground(Color.YELLOW);
+		lblBrtsEmployee.setBounds(227, 11, 231, 38);
+		contentPane.add(lblBrtsEmployee);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\DBMS_BRTS_PROJECT\\Capture.JPG"));
+		lblNewLabel.setBounds(372, 399, 277, 99);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\HP\\Pictures\\DBMS_BRTS_PROJECT\\1-blue-sky-clouds1.jpg"));
+		lblNewLabel_1.setBounds(0, 0, 649, 498);
+		contentPane.add(lblNewLabel_1);
+	}
+}
